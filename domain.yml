@@ -1,0 +1,159 @@
+version: '2.0'
+config:
+  store_entities_as_slots: true
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- ratings:
+    use_entities: true
+- deny:
+    use_entities: true
+- search_with_cuisine:
+    use_entities: true
+- cuisines:
+    use_entities: true
+- greet:
+    use_entities: true
+- search_with_locationandcuisine:
+    use_entities: true
+- search_with_location:
+    use_entities: true
+- price_range:
+    use_entities: true
+- affirm:
+    use_entities: true
+- location:
+    use_entities: true
+- restaurant_search:
+    use_entities: true
+- goodbye:
+    use_entities: true
+- stop:
+    use_entities: true
+- bot_challenge:
+    use_entities: true
+- nlu_fallback:
+    use_entities: true
+entities:
+- city
+- cuisine
+- price
+- rating
+slots:
+  city:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  cuisine:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  price:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+  rating:
+    type: rasa.shared.core.slots.FloatSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: true
+    max_value: 5.0
+    min_value: 0.0
+  location_ok:
+    type: rasa.shared.core.slots.BooleanSlot
+    initial_value: false
+    auto_fill: true
+    influence_conversation: true
+  cuisine_ok:
+    type: rasa.shared.core.slots.BooleanSlot
+    initial_value: false
+    auto_fill: true
+    influence_conversation: true
+responses:
+  utter_greet:
+  - text: |
+      Hello Welcome to Restaurant Search Chatbot
+      How may I help You?
+  - text: |
+      Hello I am Foobot
+      How can I help you?
+  - text: Hello Joey!! looking for some delicious treat?
+  utter_goodbye:
+  - text: Bon appétit :)
+  - text: Have a nice day :)
+  - text: Thankyou! Enjoy your meal :)
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_search_restaurant:
+  - text: Ok i am searching ..... please wait for a while.
+  - text: Gimme a moment..
+  utter_welcome:
+  - text: Welcome.
+  - text: You are welcome.
+  utter_anything_else:
+  - text: Would you like to order anything else?
+  - text: do you need any further help?
+  - text: Would you like to lookout for anything else?
+  - text: Want to add anything else?
+  utter_confirmation:
+  - text: Confirm this by replying yes if this is correct else no.
+  utter_ask_location:
+  - text: Could you please tell me the city you want to search restaurant in?
+  - text: Please let me know the city
+  - text: Please enter the city name
+  utter_ask_cuisine:
+  - text: What would you like to have?
+  - text: What cuisine would you like to have?
+  - text: Please let me know the cuisine you love
+  - text: What would you love to eat?
+  utter_ask_price:
+  - buttons:
+    - payload: /price_range{{"price":"100-200"}}
+      title: Rs:100-200
+    - payload: /price_range{{"price":"200-300"}}
+      title: Rs:200-300
+    - payload: /price_range{{"price":"300-400"}}
+      title: Rs:300-400
+    - payload: /price_range{{"price":">400"}}
+      title: Rs>400
+    - payload: /price_range{{"price":"000"}}
+      title: Any would work!
+    text: 'Please select the price range(for two):'
+  utter_ask_rating:
+  - buttons:
+    - payload: /ratings{{"rating":3.0}}
+      title: 1.0 to 3.0
+    - payload: /ratings{{"rating":4.0}}
+      title: 3.0 to 4.0
+    - payload: /ratings{{"rating":5.0}}
+      title: 4.0 to 5.0
+    - payload: /ratings{{"rating":0.0}}
+      title: Any would work!
+    text: 'Wanna lookout for restaurants with ratings(out of 5):'
+  utter_ask_rephrase:
+  - text: I'm sorry, I didn't quite understand that. Could you rephrase?
+  utter_default:
+  - text: Sorry I didn't get that. Can you rephrase?
+actions:
+- action_search_restaurant
+- action_verify_cuisine
+- action_verify_location
+- utter_anything_else
+- utter_ask_cuisine
+- utter_ask_location
+- utter_ask_price
+- utter_ask_rating
+- utter_ask_rephrase
+- utter_confirmation
+- utter_default
+- utter_goodbye
+- utter_greet
+- utter_iamabot
+- utter_search_restaurant
+- utter_welcome
+forms: {}
+e2e_actions: []
