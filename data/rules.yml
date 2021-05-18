@@ -1,0 +1,30 @@
+version: "2.0"
+
+rules:
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+- rule: search only when city and cuisines are set
+  condition:
+    - slot_was_set:
+        - city: true
+        - cuisine: true
+  steps:
+  - intent: ratings
+  - action: utter_search_restaurant
+  wait_for_user_input: false
+  #- action: action_search_restaurant
+  #- action: utter_anything_else
+
+- rule: Implementation of the Two-Stage-Fallback
+  steps:
+  - intent: nlu_fallback
+  - action: action_two_stage_fallback
+  - active_loop: action_two_stage_fallback
