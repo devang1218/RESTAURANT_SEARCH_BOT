@@ -1,0 +1,99 @@
+#### This file contains tests to evaluate that your bot behaves as expected.
+#### If you want to learn more, please see the docs: https://rasa.com/docs/rasa/testing-your-assistant
+
+stories:
+- story: say goodbye
+  steps:
+  - user: |
+      bye-bye!
+    intent: goodbye
+  - action: utter_goodbye
+
+- story: bot challenge
+  steps:
+  - user: |
+      are you a bot?
+    intent: bot_challenge
+  - action: utter_iamabot
+
+- story: search with cuisine
+  steps:
+  - user: |
+      I am looking for some delicious [mexican](cuisine) food
+    intent: search_with_cuisine
+  - action: action_verify_cuisine
+  - action: utter_ask_location
+  - user: |
+      I think i am near [Mumbai](city)
+    intent: location
+  - action: action_verify_location
+  - action: utter_ask_price
+  - user: |
+      Anything would work
+    intent: price_range
+  - action: utter_ask_rating
+  - user: |
+      Anything would work
+    intent: ratings
+  - action: utter_search_reasaurant
+  - action: action_search_restaurant
+  - action: utter_anything_else
+  - user: |
+      no thank you
+    intent: deny
+  - action: utter_goodbye
+
+- story: search with location
+  steps:
+  - user: |
+      I am looking for some good restaurants in [Delhi](city)
+    intent: search_with_location
+  - action: action_verify_location
+  - action: utter_ask_cuisines
+  - user: |
+      [Chole bhature](cuisine)
+    intent: cuisines
+  - action: action_verify_cuisine
+  - action: utter_anything_else
+  - user: |
+      [north Indian](cuisine)
+    intent: cuisines
+  - action: action_verify_cuisine
+  - action: utter_ask_price
+  - user: |
+      Rs:200-300
+    intent: price_range
+  - action: utter_ask_rating
+  - user: |
+      4.0 to 5.0
+    intent: ratings
+  - action: utter_search_reasaurant
+  - action: action_search_restaurant
+  - action: utter_anything_else
+  - user: |
+      no that is enough
+    intent: deny
+  - action: utter_goodbye
+
+- story: search with location and cuisine
+  steps:
+  - user: |
+      I am looking for delicious [Pizzas](cuisine) in [Indore](city)
+    intent: search_with_locationandcuisine
+  - action: action_verify_location
+  - action: action_verify_cuisine
+  - action: utter_ask_price
+  - user: |
+      Rs:100-200
+    intent: price_range
+  - action: utter_ask_rating
+  - user: |
+      4.0 to 5.0
+    intent: ratings
+  - action: utter_search_reasaurant
+  - action: action_search_restaurant
+  - action: utter_anything_else
+  - user: |
+      no
+    intent: deny
+  - action: utter_goodbye
